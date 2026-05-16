@@ -69,7 +69,7 @@ const app = express();
 // middleware
 // app.use(cors());
 app.use(cors({
-  origin: "https://mern1frontend2.vercel.app/"
+  origin: "https://mern1frontend2.vercel.app"
 }));
 app.use(express.json());
 
