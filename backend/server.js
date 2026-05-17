@@ -97,6 +97,8 @@ app.use(express.json());
 // routes
 app.use("/", userRoutes);
 app.use("/", displayRoutes);
+app.use("/", require("./routes/updateRoutes"));
+app.use("/", require("./routes/deleteRoutes"));
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
