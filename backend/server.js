@@ -63,18 +63,40 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const userRoutes = require("./routes/userRoutes");
+const displayRoutes=require("./routes/displayRoutes")
 
 const app = express();
 
 // middleware
 // app.use(cors());
+// app.use(cors({
+//   origin: "https://mern1frontend2.vercel.app"
+// }));
+// app.use(cors({
+//   origin: ["http://localhost:3000", "https://mern1frontend2.vercel.app"]
+// }))
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://mern1frontend2.vercel.app"
+];
+
 app.use(cors({
-  origin: "https://mern1frontend2.vercel.app"
-}));
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    return callback(new Error("CORS blocked"));
+  }
+}));;
+
 app.use(express.json());
 
 // routes
 app.use("/", userRoutes);
+app.use("/", displayRoutes);
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
